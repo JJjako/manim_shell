@@ -2,16 +2,17 @@
 
 pkgs.mkShell {
   buildInputs = [
-    pkgs.python310
-    pkgs.python310Packages.pip
-    pkgs.python310Packages.virtualenv
-    pkgs.git
-    pkgs.ffmpeg
-    pkgs.sox
-    pkgs.pkgconfig
-    pkgs.cairo
-    pkgs.pango
-  ];
+  pkgs.python311
+  pkgs.python311Packages.pip
+  pkgs.python311Packages.virtualenv
+  pkgs.git
+  pkgs.ffmpeg
+  pkgs.sox
+  pkgs.pkg-config
+  pkgs.cairo
+  pkgs.pango
+   ];
+
 
   shellHook = ''
     # Create venv if it doesn't exist
