@@ -1,31 +1,31 @@
 { pkgs ? import <nixpkgs> {} }:
 
-let
-  python = pkgs.python311;
-
-  manimEnv = pkgs.python311.withPackages (ps: with ps; [
-    numpy
-    manim
-    manim-slides
-  ]);
-in
-
 pkgs.mkShell {
   buildInputs = [
-    manimEnv
-    pkgs.gcc.libcxx
-    pkgs.pkg-config
+    pkgs.python310
+    pkgs.python310Packages.pip
+    pkgs.python310Packages.virtualenv
+    pkgs.git
+    pkgs.ffmpeg
+    pkgs.sox
+    pkgs.pkgconfig
     pkgs.cairo
     pkgs.pango
-    pkgs.ffmpeg
   ];
 
   shellHook = ''
-    echo "Welcome to the Manim environment!"
-    echo "Python: $(python --version)"
-    echo "Numpy: $(python -c 'import numpy; print(numpy.__version__)')"
-    echo "Manim: $(python -c 'import manim; print(manim.__version__)')"
-    echo "Manim Slides: $(python -c 'import manim_slides; print(manim_slides.__version__)')"
+    # Create venv if it doesn't exist
+    if [ ! -d ".venv" ]; then
+      python -m venv .venv
+    fi
+
+    # Activate the venv
+    source .venv/bin/activate
+
+    # Upgrade pip
+    pip install --upgrade pip
+
+    # Install Manim + Manim Slides if not already installed
+    pip install --upgrade manim manim-slides
   '';
 }
-
