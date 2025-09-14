@@ -7,6 +7,7 @@ let
     numpy
     manim
     manim-slides
+    pip
   ]);
 in
 
